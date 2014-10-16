@@ -1,5 +1,5 @@
 <?php
-class NordeaBank extends Bank
+class SEBBank extends Bank
 {
 	public function setCredentials($ssn, $pin)
 	{
