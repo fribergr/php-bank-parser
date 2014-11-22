@@ -7,7 +7,7 @@ class NordeaBank extends Bank
 
 	// Regexps for different purposes throughout the application
 	const REG_PINLOG = '/login([^\"]*)">([^<]*)inloggning<\/a>/i'; // Get link to "Personlig inloggning"
-	const REG_ACCOUNT = '/<a href="([^"]*)">([^<]*)<\/a>[^<]*<\/td>[^<]*<td>[^<]*<\/td>[^<]*<td[^>]*>([^<]*)<\/td>/'; // Getting accounts from the overview
+	const REG_ACCOUNT = '/<a href="([^"]*)">([^<]*)<\/a>[^<]*<\/td>[^<]*<td>[^<]*<\/td>[^<]*<td[^>]*>[^<]*<font[^>]*>([^<]*)<\/font>[^<]*<\/td>/'; // Getting accounts from the overview
 	const REG_MAIN = '/<li[^>]*><a[^"]*"(?P<link>.*?)">.*?Vardags[^<]*<\/a><\/li>/'; // Find "Vardagsärenden"-link for "first-page".
 	const REG_TRANS = '/<tr[^>]*>[^<]*<td[^>]*>.*?<\/td>[^<]*<td[^>]*>(?P<date>[^<]*)<\/td>[^<]*<td[^>]*>(?P<what>.*?)<\/td>[^<]*<td[^>]*>(?P<category>[^<]*)<\/td>[^<]*<td[^>]*>(?P<cost>[^<]*)<\/td>[^<]*<td[^>]*>(?P<balance>[^<]*)<\/td>[^<]*<td[^>]*>[^<]*<\/td>[^<]*<\/tr>/'; // Don't shoot me...
 
