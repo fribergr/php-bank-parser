@@ -13,7 +13,7 @@ try {
 	$accounts = $bank->getAccounts();
 	$transactions = $bank->getTransactions();
 } catch (Exception $e) {
-	echo "Something broke: " . $e->getMessage()."\n\n";
+	echo "Something broke: " . $e->getMessage() . "\n\n";
 	die();
 }
 
