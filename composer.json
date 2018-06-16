@@ -2,6 +2,7 @@
     "name": "fribergr/php-bank-parser",
     "description": "Allows user to export their account status and transactions from some known banks",
     "require": {
-        "php": "^7.0"
+        "php": "^7.0",
+        "spomky-labs/otphp": "^8.3"
     }
 }

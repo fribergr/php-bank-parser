@@ -3,6 +3,7 @@
 abstract class Bank
 {
         protected $curlwrapper;
+        protected $otp;
         protected $ssn;
         protected $pin;
         protected $accounts;
@@ -13,6 +14,7 @@ abstract class Bank
                 $this->ssn = $ssn;
                 $this->pin = $pin;
                 $this->curlwrapper = new CurlWrapper();
+                $this->otp = new OTP();
                 // Should probably test pin here, or get all data here?
         }
 

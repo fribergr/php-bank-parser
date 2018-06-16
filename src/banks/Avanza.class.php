@@ -1,13 +1,21 @@
 <?php
+
 class Avanza extends Bank
 {
         const BASE_URL = "https://www.avanza.se";
-        const LOGIN_URL = "https://www.avanza.se/_api/authentication/sessions/username";
+        const LOGIN_URL = "https://www.avanza.se/_api/authentication/sessions/usercredentials";
         const OVERVIEW_URL = "https://www.avanza.se/_mobile/account/overview";
+        const OTP_URL = 'https://www.avanza.se/_api/authentication/sessions/totp';
+
+        private $otpsecret = null;
 
         public function setCredentials($ssn, $pin)
         {
                 parent::setCredentials($ssn, $pin);
+        }
+
+        public function setOtpSecret($otpsecret) {
+                $this->otpsecret = $otpsecret;
         }
 
         private function getHeaderAssocArray($header)
@@ -34,6 +42,22 @@ class Avanza extends Bank
                         'username' => $this->ssn,
                 ];
                 list($headers, $data) = $this->curlwrapper->getData(self::LOGIN_URL, "", $params, 'json');
+                $dataarr = json_decode($data, true);
+
+                if (isset($dataarr['twoFactorLogin']) && isset($dataarr['twoFactorLogin']['transactionId'])) {
+                        $transactionid = $dataarr['twoFactorLogin']['transactionId'];
+                        $params = [
+                                'method' => 'TOTP',
+                                'totpCode' => $this->otp->getOtp($this->otpsecret),
+                        ];
+                        $extra_headers = [
+                                'Cookie' => 'AZAMFATRANSACTION=' . $transactionid
+                        ];
+                        list($headers, $data) = $this->curlwrapper->getData(self::OTP_URL, "", $params, 'json', $extra_headers);
+                } else {
+                        throw new Exception("Login with TOTP doesn't work");
+                }
+
                 $dataarr = json_decode($data, true);
                 if (isset($dataarr['authenticationSession'])) {
                         $authsession = $dataarr['authenticationSession'];
